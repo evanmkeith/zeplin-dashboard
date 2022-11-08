@@ -25,12 +25,13 @@ const getAllProjects = async() => {
     return projects
 };
 
-const getAllNotifications = async() => {
+const getAllNotifications = async(filter, offset) => {
     const { 
         data 
       } = await zeplin.notifications.getUserNotifications({
-        limit: 50,
-        offset: 0  
+        limit: 100,
+        offset: offset,
+        type: filter
       });
     return data
 };

@@ -50,10 +50,10 @@ export default function Notifications({ notification, key }) {
     const userImage = notification.actor.user.avatar ? (<img src={notification.actor.user.avatar} width='25px'/>) : notification.actor.user.emotar ? notification.actor.user.emotar : (<img src='https://cdn.sanity.io/images/wd3e2pma/production/7b336dc26fd85ae98b414761d58238d225876a88-60x48.svg' width='25px'/>);
     const name = notification.actor.user.username.charAt(0).toUpperCase() + notification.actor.user.username.slice(1);
     const createdAt = moment.unix(notification.created).format("dddd, MMMM Do YYYY [at] h:mm a");
-    const contextValues = Object.values(notification.context);
-    const contextKeys = Object.keys(notification.context);
-    const resourceValues = Object.values(notification.resource);
-    const resourceKeys = Object.keys(notification.resource);
+    const contextValues = notification.context ? Object.values(notification.context) : [];
+    const contextKeys = notification.context ? Object.keys(notification.context) : [];
+    const resourceValues = notification.resource ? Object.values(notification.resource) : [];
+    const resourceKeys = notification.resource ? Object.keys(notification.resource) : [];
 
     const notificationContext = () => {
         const extra = contextValues.map((c, idx) => {
@@ -83,7 +83,7 @@ export default function Notifications({ notification, key }) {
         <>
             <li key={key}>
                 <p>{userImage} {name} <strong>{actions[notification.action]}</strong> a <strong>{types[notification.type] ? types[notification.type] : notification.type}</strong></p>
-                {notificationContext()}
+                {notificationContext() ? notificationContext() : (<></>)}
                 <p>created: {createdAt}</p>
                 <p></p>
             </li>
