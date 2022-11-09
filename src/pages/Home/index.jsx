@@ -49,6 +49,7 @@ export default function Home() {
 
     const handleChangeType = (e) => {
         e.preventDefault();
+        setOffset(0);
         const options = e.target.options;
         let value = [];
         for (let i = 0; i < options.length; i++) {
@@ -86,6 +87,7 @@ export default function Home() {
 
     const handleChangeOffset = (e, direction) => {
         e.preventDefault();
+        document.getElementById("notification-users").reset();
         if(direction == 'prev'){
             const newOffset = offset - 50;
             setOffset(newOffset);
@@ -96,6 +98,7 @@ export default function Home() {
     };
  
     console.log('offset ', offset, 'filter ', filter);
+    console.log(notifications);
 
     return (
         <div> 
@@ -124,7 +127,9 @@ export default function Home() {
             </div>
             <div> 
                 <h3>Notifications</h3>
-                <button id='prev-page-button' onClick={(e) => handleChangeOffset(e, 'prev')}>prev</button><button id='next-page-button' onClick={(e) => handleChangeOffset(e, 'next')}>next</button>
+                <div>
+                    <button id='prev-page-button' onClick={(e) => handleChangeOffset(e, 'prev')}>prev</button><span> {offset == 0 ? 1 : offset/50 + 1} </span><button id='next-page-button' onClick={(e) => handleChangeOffset(e, 'next')}>next</button>
+                </div>
                 <ol>
                     {notificationsFilterdByUser.length > 0 ? notificationsFilterdByUser.map((notification, idx) => {
                         return (
@@ -132,6 +137,10 @@ export default function Home() {
                         )
                     }) : (<li key='1'>Fetching</li>) }
                 </ol>
+                {notificationsFilterdByUser.length > 10 ? (
+                    <div>
+                        <button id='prev-page-button' onClick={(e) => handleChangeOffset(e, 'prev')}>prev</button><span> {offset == 0 ? 1 : offset/50 + 1} </span><button id='next-page-button' onClick={(e) => handleChangeOffset(e, 'next')}>next</button>
+                    </div>) : (<></>)}
             </div>
         </div>
     )
