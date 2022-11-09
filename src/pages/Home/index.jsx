@@ -27,11 +27,11 @@ const notificationTypes = {
 
 
 export default function Home() {
+    const [ notificationsFilterdByUser, setNotificationsFilterdByUser ] = useState([]);
     const [ notifications, setNotifications ] = useState([]);
     const [ offset, setOffset] = useState(0);
     const [ filter, setFilter ] = useState([]);
     const notificationActors = notifications == [] ? [] : _.uniq(notifications.map(notification => notification.actor.user.email));
-    const filteredNotifications = notifications;
 
     useEffect(() => {
         getAllNotifications(filter, offset);
@@ -40,6 +40,7 @@ export default function Home() {
     const getAllNotifications = async(filter, offset) => { 
         return zeplinApi.getAllNotifications(filter, offset).then((res) => {
             setNotifications(res);
+            setNotificationsFilterdByUser(res);  
         })
     };
 
@@ -55,46 +56,60 @@ export default function Home() {
         return setFilter(value.flat());
     };
 
-    const handleClearSelected = (e) => {
+    const handleClearTypeSelected = (e) => {
         e.preventDefault();
-        document.getElementById("typeForm").reset();
+        document.getElementById("type-form").reset();
         getAllNotifications();
-    }
+    };
 
-    const handleFilterUser = () => {
-        return 
-    }
-    console.log(notifications);
-    console.log(notificationActors);
+    const handleClearUserSelected =(e) => {
+        e.preventDefault();
+        document.getElementById("notification-users").reset();
+        setNotificationsFilterdByUser(notifications);
+    };
+
+    const handleFilterUser = (e) => {
+        e.preventDefault();
+        const options = e.target.options;
+        let value = [];
+        for (let i = 0; i < options.length; i++) {
+          if (options[i].selected) {
+            value.push(options[i].value);
+          }
+        };
+        const filteredNotifications = notifications.filter(notification => value.includes(notification.actor.user.email));
+        setNotificationsFilterdByUser(filteredNotifications);
+    };
  
     return (
         <div> 
             <h2>Home</h2>
             <div>
-                <form id='typeForm' onChange={(e) => handleChangeType(e)}>
+                <form id='type-form' onChange={(e) => handleChangeType(e)}>
                     <label for="type">Choose a notification type:</label>
                     <select name="types" id="types" multiple size='10'>
                         {Object.keys(notificationTypes).map((type, idx) => {
                             return (<option value={type} key={idx}>{type}</option>)
                         })}
                     </select>
-                    <button onClick={(e) => handleClearSelected(e)}>Clear</button>
+                    <button onClick={(e) => handleClearTypeSelected(e)}>Clear</button>
                 </form>
-                {notificationActors.length  == 0 ? (<></>) : (
-                    <form>
+                {notificationActors.length == 0 ? (<></>) : (
+                    <form id='notification-users' onChange={(e)=> handleFilterUser(e)}>
                         <label for="user">Filter by user:</label>
                         <select name="users" id="users" multiple size='5'>
                             {notificationActors.map((type, idx) => {
                                 return (<option value={type} key={idx}>{type}</option>)
                             })}
                         </select>
+                        <button onClick={(e) => handleClearUserSelected(e)}>Clear</button>
                     </form>
                 )}
             </div>
             <div> 
                 <h3>Notifications</h3>
                 <ol>
-                    {notifications.length > 0 ? notifications.map((notification, idx) => {
+                    {notificationsFilterdByUser.length > 0 ? notificationsFilterdByUser.map((notification, idx) => {
                         return (
                             <Notification notification={notification} key={idx}/>
                         )
