@@ -34,14 +34,17 @@ export default function Home() {
     const notificationActors = notifications == [] ? [] : _.uniq(notifications.map(notification => notification.actor.user.email));
 
     useEffect(() => {
+
         getAllNotifications(filter, offset);
+        offset == 0 ? document.getElementById("prev-page-button").disabled = true : document.getElementById("prev-page-button").disabled = false;
     }, [filter, offset]);
 
     const getAllNotifications = async(filter, offset) => { 
         return zeplinApi.getAllNotifications(filter, offset).then((res) => {
             setNotifications(res);
             setNotificationsFilterdByUser(res);  
-        })
+            res.length < 50 ? document.getElementById("next-page-button").disabled = true : document.getElementById("next-page-button").disabled = false;
+        }).catch(err => console.log(err));
     };
 
     const handleChangeType = (e) => {
@@ -80,7 +83,20 @@ export default function Home() {
         const filteredNotifications = notifications.filter(notification => value.includes(notification.actor.user.email));
         setNotificationsFilterdByUser(filteredNotifications);
     };
+
+    const handleChangeOffset = (e, direction) => {
+        e.preventDefault();
+        if(direction == 'prev'){
+            const newOffset = offset - 50;
+            setOffset(newOffset);
+        } else {
+            const newOffset = offset + 50;
+            setOffset(newOffset);
+        };
+    };
  
+    console.log('offset ', offset, 'filter ', filter);
+
     return (
         <div> 
             <h2>Home</h2>
@@ -108,6 +124,7 @@ export default function Home() {
             </div>
             <div> 
                 <h3>Notifications</h3>
+                <button id='prev-page-button' onClick={(e) => handleChangeOffset(e, 'prev')}>prev</button><button id='next-page-button' onClick={(e) => handleChangeOffset(e, 'next')}>next</button>
                 <ol>
                     {notificationsFilterdByUser.length > 0 ? notificationsFilterdByUser.map((notification, idx) => {
                         return (

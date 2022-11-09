@@ -29,7 +29,7 @@ const getAllNotifications = async(filter, offset) => {
     const { 
         data 
       } = await zeplin.notifications.getUserNotifications({
-        limit: 100,
+        limit: 50,
         offset: offset,
         type: filter
       });
