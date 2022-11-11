@@ -10,6 +10,13 @@ const zeplin = new ZeplinApi(
     })
   );
 
+const getUser = async() => {
+  const { 
+    data 
+  } = await zeplin.users.getCurrentUser();
+  return data
+}
+
 const getAllProjects = async() => {
     const projects = [];
     let data = []; 
@@ -49,5 +56,6 @@ const getAllWorkspaces = async() => {
 export {
     getAllProjects,
     getAllNotifications, 
-    getAllWorkspaces
+    getAllWorkspaces, 
+    getUser,
 }

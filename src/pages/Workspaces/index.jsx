@@ -5,19 +5,19 @@ import {
 } from 'react';
 
 
-export default function Workspaces() {
-    const [ projects, setProjects ] = useState([]);
+export default function Workspaces({ projects, user }) {
+    // const [ projects, setProjects ] = useState([]);
 
-    useEffect(() => {
-        console.log(projects);
-    }, [projects]);
+    // useEffect(() => {
+    //     console.log(projects);
+    // }, [projects]);
 
-    const getProjects = async(e) => {
-        e.preventDefault();
-        await zeplinApi.getAllProjects().then((res) => {
-           setProjects(res);
-        });
-    };
+    // const getProjects = async(e) => {
+    //     e.preventDefault();
+    //     await zeplinApi.getAllProjects().then((res) => {
+    //        setProjects(res);
+    //     });
+    // };
 
     return (
         <div> 

@@ -1,40 +1,36 @@
 import * as zeplinApi from '../../api/zeplin.service';
 import _ from 'lodash';
-
 import {
     useState, 
-    useEffect
+    useEffect, 
+    useContext
 } from 'react';
-import Notification from '../../components/Notification'
-import { NotificationsApi } from '@zeplin/sdk/dist/apis/notifications-api';
-const notificationTypes = {
-    'Project' : ["workspace.project"], 
-    'Styleguide': ["workspace.styleguide"], 
-    'Extensions': ["project.extension","styleguide.extension" ], 
-    'Membership': ["user.project_membership", "user.styleguide_membership"], 
-    'Components': ["project.component", "styleguide.component"],
-    'Colors': ["project.color", "styleguide.color"],
-    'Comments': ["project.screen.note", "project.screen.note.comment"],
-    'Screens': ["project.screen"],
-    'Text Styles': ["project.text_style", "styleguide.text_style"],
-    'Spacing Tokens': ["project.spacing_token", "styleguide.spacing_token"],
-    'Jira Integration': ["project.screen.jira_integration", "project.jira_integration"],
-    'Member': ["workspace.organization.member", "project.member", "styleguide.member"],
-    'Slack Integration': ["project.slack_integration", "styleguide.slack_integration"],
-    //'Flows': ["project.flow_board"]
-}
+import Notification from '../../components/Notification';
 
-
-
-export default function Home() {
+export default function Home({ projects, user }) {
     const [ notificationsFilterdByUser, setNotificationsFilterdByUser ] = useState([]);
     const [ notifications, setNotifications ] = useState([]);
     const [ offset, setOffset] = useState(0);
     const [ filter, setFilter ] = useState([]);
     const notificationActors = notifications == [] ? [] : _.uniq(notifications.map(notification => notification.actor.user.email));
+    const notificationTypes = {
+        'Project' : ["workspace.project"], 
+        'Styleguide': ["workspace.styleguide"], 
+        'Extensions': ["project.extension","styleguide.extension" ], 
+        'Membership': ["user.project_membership", "user.styleguide_membership"], 
+        'Components': ["project.component", "styleguide.component"],
+        'Colors': ["project.color", "styleguide.color"],
+        'Comments': ["project.screen.note", "project.screen.note.comment"],
+        'Screens': ["project.screen"],
+        'Text Styles': ["project.text_style", "styleguide.text_style"],
+        'Spacing Tokens': ["project.spacing_token", "styleguide.spacing_token"],
+        'Jira Integration': ["project.screen.jira_integration", "project.jira_integration"],
+        'Member': ["workspace.organization.member", "project.member", "styleguide.member"],
+        'Slack Integration': ["project.slack_integration", "styleguide.slack_integration"],
+        //'Flows': ["project.flow_board"]
+    };
 
     useEffect(() => {
-
         getAllNotifications(filter, offset);
         offset == 0 ? document.getElementById("prev-page-button").disabled = true : document.getElementById("prev-page-button").disabled = false;
     }, [filter, offset]);
@@ -96,9 +92,8 @@ export default function Home() {
             setOffset(newOffset);
         };
     };
- 
-    console.log('offset ', offset, 'filter ', filter);
-    console.log(notifications);
+
+    console.log(' home projects ', projects, ' user ', user);
 
     return (
         <div> 

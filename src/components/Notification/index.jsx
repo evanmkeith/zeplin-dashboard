@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export default function Notifications({ notification, key }) {
+export default function Notification({ notification, key }) {
     const types = {
         "workspace.project": 'project', 
         "workspace.styleguide": 'styleguide',
