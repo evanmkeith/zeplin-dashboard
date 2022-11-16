@@ -52,8 +52,6 @@ export default function Notification({ notification, key }) {
     const createdAt = moment.unix(notification.created).format("dddd, MMMM Do YYYY [at] h:mm a");
     const contextValues = notification.context ? Object.values(notification.context) : [];
     const contextKeys = notification.context ? Object.keys(notification.context) : [];
-    const resourceValues = notification.resource ? Object.values(notification.resource) : [];
-    const resourceKeys = notification.resource ? Object.keys(notification.resource) : [];
 
     const notificationContext = () => {
         const extra = contextValues.map((c, idx) => {
@@ -74,9 +72,31 @@ export default function Notification({ notification, key }) {
     };
 
     const notificationResource = () => {
-        const extra = resourceValues[0];
-        
-        return ''
+        const type = notification.resource ? notification.resource.type : '';
+        const extraKeys = notification.resource ? Object.keys(notification.resource.extra) : [];
+        const extraValues = notification.resource ? Object.values(notification.resource.extra) : [];   
+        const extra = extraKeys.map((key, idx) => {
+            if(key == 'color'){
+                const colorKey = Object.keys(extraValues[idx]);
+                const value = Object.values(extraValues[idx]).map((v, index) => ` ${colorKey[index]}: ${v}`)
+                return `${key}: ${value}`
+            } else if(key == 'issue'){
+                return (<a href={extraValues[idx]['url']} target='_blank'>{extraValues[idx]['key']}</a>)
+            }
+            return `${key}: ${extraValues[idx]}`
+        });
+
+        if(type == ''){
+            return (<></>)
+        }
+        return (<>
+            <p>{type}:</p>
+            <ul>
+                {extra.map(extra => (
+                    <li>{extra}</li>
+                ))}
+            </ul>
+        </>)
     }
 
     return(
@@ -84,8 +104,8 @@ export default function Notification({ notification, key }) {
             <li key={key}>
                 <p>{userImage} {name} <strong>{actions[notification.action]}</strong> a <strong>{types[notification.type] ? types[notification.type] : notification.type}</strong></p>
                 {notificationContext() ? notificationContext() : (<></>)}
+                {notificationResource() ? notificationResource() : (<></>)}
                 <p>created: {createdAt}</p>
-                <p></p>
             </li>
         </>
     )

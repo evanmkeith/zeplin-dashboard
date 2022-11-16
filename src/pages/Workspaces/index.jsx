@@ -18,14 +18,14 @@ export default function Workspaces({ projects, user }) {
     //        setProjects(res);
     //     });
     // };
+    const allProjects = projects[0].allProjects;
 
     return (
         <div> 
             <h1>Projects</h1>
-            <button onClick={(e) => getProjects(e)}>Get Projects</button>
             <p>Projects:</p>
             <ul>
-                { projects.length ? projects.map((project, idx) => {
+                { allProjects ? allProjects.map((project, idx) => {
                     return (
                         <li key={idx}>
                             <p>

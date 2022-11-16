@@ -12,6 +12,7 @@ export default function Home({ projects, user }) {
     const [ notifications, setNotifications ] = useState([]);
     const [ offset, setOffset] = useState(0);
     const [ filter, setFilter ] = useState([]);
+    const userName = user.username;
     const notificationActors = notifications == [] ? [] : _.uniq(notifications.map(notification => notification.actor.user.email));
     const notificationTypes = {
         'Project' : ["workspace.project"], 
@@ -93,11 +94,12 @@ export default function Home({ projects, user }) {
         };
     };
 
-    console.log(' home projects ', projects, ' user ', user);
+    console.log(projects);
+    console.log(notificationsFilterdByUser);
 
     return (
         <div> 
-            <h2>Home</h2>
+            <h2>Welcome home, {user.username}</h2>
             <div>
                 <form id='type-form' onChange={(e) => handleChangeType(e)}>
                     <label for="type">Choose a notification type:</label>

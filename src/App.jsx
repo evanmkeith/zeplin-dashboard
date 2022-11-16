@@ -31,6 +31,7 @@ function App() {
         }
       });
       setProjects(projectsBrokenIntoWorkspaces);
+      console.log(projects)
     }).catch(err => console.log(err))
   };
 
@@ -47,7 +48,7 @@ function App() {
 
   return (
     <>
-        <Nav />
+        <Nav user={user}/>
           <Routes>
             <Route
               path='/'
