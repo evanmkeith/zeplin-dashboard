@@ -6,6 +6,7 @@ import {
     useContext
 } from 'react';
 import Notification from '../../components/Notification';
+import '../../styles/css/notificationsPage.css';
 
 export default function Home({ projects, user }) {
     const [ notificationsFilterdByUser, setNotificationsFilterdByUser ] = useState([]);
@@ -65,7 +66,7 @@ export default function Home({ projects, user }) {
 
     const handleClearUserSelected =(e) => {
         e.preventDefault();
-        document.getElementById("notification-users").reset();
+        document.getElementById("notification-users-form").reset();
         setNotificationsFilterdByUser(notifications);
     };
 
@@ -84,7 +85,7 @@ export default function Home({ projects, user }) {
 
     const handleChangeOffset = (e, direction) => {
         e.preventDefault();
-        document.getElementById("notification-users").reset();
+        document.getElementById("notification-users-form").reset();
         if(direction == 'prev'){
             const newOffset = offset - 50;
             setOffset(newOffset);
@@ -94,50 +95,48 @@ export default function Home({ projects, user }) {
         };
     };
 
-    console.log(projects);
-    console.log(notificationsFilterdByUser);
-
     return (
         <div> 
-            <h2>Welcome home, {user.username}</h2>
-            <div>
-                <form id='type-form' onChange={(e) => handleChangeType(e)}>
-                    <label for="type">Choose a notification type:</label>
-                    <select name="types" id="types" multiple size='10'>
-                        {Object.keys(notificationTypes).map((type, idx) => {
-                            return (<option value={type} key={idx}>{type}</option>)
-                        })}
-                    </select>
-                    <button onClick={(e) => handleClearTypeSelected(e)}>Clear</button>
-                </form>
-                {notificationActors.length == 0 ? (<></>) : (
-                    <form id='notification-users' onChange={(e)=> handleFilterUser(e)}>
-                        <label for="user">Filter by user:</label>
-                        <select name="users" id="users" multiple size='5'>
-                            {notificationActors.map((type, idx) => {
-                                return (<option value={type} key={idx}>{type}</option>)
+            <div id='main-home'>
+                <div id='notification-filters'>
+                    <div id='notification-filters_forms'>
+                        <form id='type-form' onChange={(e) => handleChangeType(e)}>
+                            <span>Notification type:</span>
+                            <select name="types" id="types" multiple size='13'>
+                            {Object.keys(notificationTypes).map((type, idx) => {
+                                return (<option type='checkbox' value={type} key={idx}>{type}</option>)
                             })}
-                        </select>
-                        <button onClick={(e) => handleClearUserSelected(e)}>Clear</button>
-                    </form>
-                )}
-            </div>
-            <div> 
-                <h3>Notifications</h3>
-                <div>
-                    <button id='prev-page-button' onClick={(e) => handleChangeOffset(e, 'prev')}>prev</button><span> {offset == 0 ? 1 : offset/50 + 1} </span><button id='next-page-button' onClick={(e) => handleChangeOffset(e, 'next')}>next</button>
+                            </select>
+                            <button onClick={(e) => handleClearTypeSelected(e)}>Clear</button>
+                        </form>
+                        {notificationActors.length == 0 ? (<></>) : (
+                            <form id='notification-users-form' onChange={(e)=> handleFilterUser(e)}>
+                                <label for="user">Filter by user:</label>
+                                <select name="users" id="users" multiple size='5'>
+                                    {notificationActors.map((type, idx) => {
+                                        return (<option value={type} key={idx}>{type}</option>)
+                                    })}
+                                </select>
+                                <button onClick={(e) => handleClearUserSelected(e)}>Clear</button>
+                            </form>
+                        )}
+                        <div id='changePage'>
+                            <span>Page</span>
+                            <div>
+                            <button id='prev-page-button' onClick={(e) => handleChangeOffset(e, 'prev')}>prev</button><span> {offset == 0 ? 1 : offset/50 + 1} </span><button id='next-page-button' onClick={(e) => handleChangeOffset(e, 'next')}>next</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ol>
-                    {notificationsFilterdByUser.length > 0 ? notificationsFilterdByUser.map((notification, idx) => {
-                        return (
-                            <Notification notification={notification} key={idx}/>
-                        )
-                    }) : (<li key='1'>Fetching</li>) }
-                </ol>
-                {notificationsFilterdByUser.length > 10 ? (
-                    <div>
-                        <button id='prev-page-button' onClick={(e) => handleChangeOffset(e, 'prev')}>prev</button><span> {offset == 0 ? 1 : offset/50 + 1} </span><button id='next-page-button' onClick={(e) => handleChangeOffset(e, 'next')}>next</button>
-                    </div>) : (<></>)}
+                <div id='notifications'> 
+                    <ul>
+                        {notificationsFilterdByUser.length > 0 ? notificationsFilterdByUser.map((notification, idx) => {
+                            return (
+                                <Notification notification={notification} key={idx}/>
+                            )
+                        }) : (<li key='1'>Fetching</li>) }
+                    </ul>
+                </div>
             </div>
         </div>
     )

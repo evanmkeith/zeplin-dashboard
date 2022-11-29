@@ -78,22 +78,32 @@ export default function Notification({ notification, key }) {
         const extra = extraKeys.map((key, idx) => {
             if(key == 'color'){
                 const colorKey = Object.keys(extraValues[idx]);
-                const value = Object.values(extraValues[idx]).map((v, index) => ` ${colorKey[index]}: ${v}`)
-                return `${key}: ${value}`
+                const value = Object.values(extraValues[idx]).map((v, index) => ` ${colorKey[index]}: ${v}`);
+                return (<li style={{'backgroundColor': `rgba(${extraValues[idx]['r']}, ${extraValues[idx]['g']}, ${extraValues[idx]['b']}, ${extraValues[idx]['a']})`}}>{key}: {value}</li>)
             } else if(key == 'issue'){
-                return (<a href={extraValues[idx]['url']} target='_blank'>{extraValues[idx]['key']}</a>)
+                return (<li><a href={extraValues[idx]['url']} target='_blank'>{extraValues[idx]['key']}</a></li>)
             }
-            return `${key}: ${extraValues[idx]}`
+            return (<li>{key}: {extraValues[idx]}</li>)
         });
 
         if(type == ''){
             return (<></>)
+        } else if(type == 'Color'){
+            return (<>
+                <span>{type}:</span>
+                <ul>
+                    {extra.map(extra => (
+                        extra
+                    ))}
+                    <li id='color' style={{'backgroundColor': `rgba(${notification.resource.extra['r']}, ${notification.resource.extra['g']}, ${notification.resource.extra['b']}, ${notification.resource.extra['a']})`}}></li>
+                </ul>
+            </>)
         }
         return (<>
-            <p>{type}:</p>
+            <span>{type}:</span>
             <ul>
                 {extra.map(extra => (
-                    <li>{extra}</li>
+                    extra
                 ))}
             </ul>
         </>)
@@ -101,7 +111,7 @@ export default function Notification({ notification, key }) {
 
     return(
         <>
-            <li key={key}>
+            <li key={key} className='notification'>
                 <p>{userImage} {name} <strong>{actions[notification.action]}</strong> a <strong>{types[notification.type] ? types[notification.type] : notification.type}</strong></p>
                 {notificationContext() ? notificationContext() : (<></>)}
                 {notificationResource() ? notificationResource() : (<></>)}

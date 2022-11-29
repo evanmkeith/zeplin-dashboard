@@ -1,0 +1,48 @@
+#main-home {
+    display: flex;
+    width: 100%;
+
+}
+
+#notification-filters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+}
+
+#notification-filters_forms {
+    display: flex;
+    position: fixed;
+    top: 18vh;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    width: 15vw;
+}
+
+#notifications {
+
+    width: 85vw;
+}
+
+#type-form {
+    display: flex; 
+    flex-direction: column;
+    width: 15vw;
+}
+
+#notification-users-form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    width: 15vw;
+}
+
+.notification {
+    list-style: none;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    width: 60%;  
+}

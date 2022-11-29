@@ -1,0 +1,49 @@
+#navBar {
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    padding: 5px 20px 0px 20px ;
+    top: 0px;
+    background-color: white;
+    width: cover;
+    box-shadow: 0 8px 6px -6px rgb(0 0 0 / 0.2);
+}
+#navBar_title {
+    display: flex;
+    align-items: center;
+}
+
+
+#navBar_nav {
+    display: flex;
+    justify-content: flex-end;
+    width: 30%;
+    align-items: center;
+}
+
+#navBar_links {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+}
+
+img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+form {
+    display: flex;
+    align-items: center;
+}
+
+#changePage {
+    border: 1px solid rgb(0 0 0 / 0.2);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    margin: 80px 0 0 0;
+}
