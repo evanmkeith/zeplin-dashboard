@@ -33,11 +33,45 @@
     width: 15vw;
 }
 
+#types { 
+    border: 1px solid grey;
+    padding: 10% 10% 10% 10%;
+    border-radius: 5px;   
+}
+
+option {
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+.type {
+    padding: 5px;
+}
+
 #notification-users-form {
     display: flex;
     flex-direction: column;
     margin: 10px;
     width: 15vw;
+}
+
+.clear {
+    margin: 10px;
+    background-color: #419bf9;
+    border: none; 
+    border-radius: 2px;
+    color: #eae8ea;
+    padding: 6px 15px;
+}
+
+.clear:hover {
+    cursor: pointer;
+    background-color: #448fe1;
+}
+
+.clear:focus {
+    background-color: #979197;
 }
 
 .notification {

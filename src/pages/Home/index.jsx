@@ -62,6 +62,7 @@ export default function Home({ projects, user }) {
         e.preventDefault();
         document.getElementById("type-form").reset();
         getAllNotifications();
+        document.querySelector(".clear").blur();
     };
 
     const handleClearUserSelected =(e) => {
@@ -104,10 +105,10 @@ export default function Home({ projects, user }) {
                             <span>Notification type:</span>
                             <select name="types" id="types" multiple size='13'>
                             {Object.keys(notificationTypes).map((type, idx) => {
-                                return (<option type='checkbox' value={type} key={idx}>{type}</option>)
+                                return (<option type='checkbox' value={type} key={idx} className='type'>{type}</option>)
                             })}
                             </select>
-                            <button onClick={(e) => handleClearTypeSelected(e)}>Clear</button>
+                            <button onClick={(e) => handleClearTypeSelected(e)} className='clear'>Clear</button>
                         </form>
                         {notificationActors.length == 0 ? (<></>) : (
                             <form id='notification-users-form' onChange={(e)=> handleFilterUser(e)}>
@@ -117,7 +118,7 @@ export default function Home({ projects, user }) {
                                         return (<option value={type} key={idx}>{type}</option>)
                                     })}
                                 </select>
-                                <button onClick={(e) => handleClearUserSelected(e)}>Clear</button>
+                                <button onClick={(e) => handleClearUserSelected(e)} className='clear'>Clear</button>
                             </form>
                         )}
                         <div id='changePage'>
