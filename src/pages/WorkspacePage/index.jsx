@@ -6,9 +6,7 @@ import {
 } from 'react';
 
 
-export default function Workspaces({ projects, user }) {
-
-    console.log(projects);
+export default function WorkspacePage({ workspace }) {
 
     return (
         <div> 

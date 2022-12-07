@@ -62,13 +62,14 @@ export default function Home({ projects, user }) {
         e.preventDefault();
         document.getElementById("type-form").reset();
         getAllNotifications();
-        document.querySelector(".clear").blur();
+        document.querySelector("#types").focus();
     };
 
     const handleClearUserSelected =(e) => {
         e.preventDefault();
         document.getElementById("notification-users-form").reset();
         setNotificationsFilterdByUser(notifications);
+        document.querySelector("#users").focus();
     };
 
     const handleFilterUser = (e) => {
@@ -96,13 +97,16 @@ export default function Home({ projects, user }) {
         };
     };
 
+    console.log(projects);
+    console.log(notificationsFilterdByUser);
+
     return (
         <div> 
             <div id='main-home'>
                 <div id='notification-filters'>
                     <div id='notification-filters_forms'>
                         <form id='type-form' onChange={(e) => handleChangeType(e)}>
-                            <span>Notification type:</span>
+                            <span className="filter-title">Filter by type</span>
                             <select name="types" id="types" multiple size='13'>
                             {Object.keys(notificationTypes).map((type, idx) => {
                                 return (<option type='checkbox' value={type} key={idx} className='type'>{type}</option>)
@@ -112,7 +116,7 @@ export default function Home({ projects, user }) {
                         </form>
                         {notificationActors.length == 0 ? (<></>) : (
                             <form id='notification-users-form' onChange={(e)=> handleFilterUser(e)}>
-                                <label for="user">Filter by user:</label>
+                                <label for="user" className="filter-title">Filter by user</label>
                                 <select name="users" id="users" multiple size='5'>
                                     {notificationActors.map((type, idx) => {
                                         return (<option value={type} key={idx}>{type}</option>)
@@ -121,10 +125,18 @@ export default function Home({ projects, user }) {
                                 <button onClick={(e) => handleClearUserSelected(e)} className='clear'>Clear</button>
                             </form>
                         )}
-                        <div id='changePage'>
-                            <span>Page</span>
-                            <div>
-                            <button id='prev-page-button' onClick={(e) => handleChangeOffset(e, 'prev')}>prev</button><span> {offset == 0 ? 1 : offset/50 + 1} </span><button id='next-page-button' onClick={(e) => handleChangeOffset(e, 'next')}>next</button>
+                        <div id='change-page'>
+                            <p id='change-page_title'>Page</p>
+                            <div id='change-page_buttons'>
+                            <button id='prev-page-button' onClick={(e) => handleChangeOffset(e, 'prev')}>
+                                <span className="material-symbols-outlined">
+                                    navigate_before
+                                </span>
+                            </button><p id='change-page_page-number'> {offset == 0 ? 1 : offset/50 + 1} </p><button id='next-page-button' onClick={(e) => handleChangeOffset(e, 'next')}>
+                                <span className="material-symbols-outlined">
+                                    navigate_next
+                                </span>
+                            </button>
                             </div>
                         </div>
                     </div>

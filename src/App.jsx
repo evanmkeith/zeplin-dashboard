@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Nav from './components/Nav'
 import Home from './pages/Home';
 import Workspaces from './pages/Workspaces';
+import WorkspacePage from './pages/WorkspacePage';
 import * as zeplinApi from './api/zeplin.service';
 import _ from 'lodash';
 
@@ -40,7 +41,7 @@ function App() {
       setUser(res);
     }).catch(err => console.log(err))
   };
-
+  
   useEffect(()=> {
     fetchProjects();
     fetchUser();
@@ -58,6 +59,11 @@ function App() {
             <Route
               path='/workspaces'
               element={<Workspaces projects={projects} user={user}/>}
+              >
+            </Route>
+            <Route
+              path='/workspace'
+              element={<WorkspacePage />}
               >
             </Route>
           </Routes>

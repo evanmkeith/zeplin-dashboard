@@ -14,13 +14,13 @@ export default function Nav({ user }) {
             <div id='navBar_nav'>
                 <div id='navBar_links'>
                     <NavLink 
-                        style={{ textDecoration: 'none' }}
+                        style={{ textDecoration: 'none', color: 'black' }}
                         to='/'
                         >
                     Home
                     </NavLink>
                     <NavLink 
-                        style={{ textDecoration: 'none' }}
+                        style={{ textDecoration: 'none', color: 'black' }}
                         to='/workspaces'
                         >
                     Workspaces

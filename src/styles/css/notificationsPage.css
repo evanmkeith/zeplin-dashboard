@@ -1,3 +1,11 @@
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48;
+}
+
 #main-home {
     display: flex;
     width: 100%;
@@ -23,7 +31,6 @@
 }
 
 #notifications {
-
     width: 85vw;
 }
 
@@ -33,10 +40,21 @@
     width: 15vw;
 }
 
+
+.filter-title {
+    padding: 10px;
+    font-weight: bold;
+}
+
 #types { 
     border: 1px solid grey;
     padding: 10% 10% 10% 10%;
     border-radius: 5px;   
+}
+
+#users {
+    border: 1px solid grey;
+    padding: 5% 5%;     border-radius: 5px;  
 }
 
 option {
@@ -80,3 +98,42 @@ option {
     border-radius: 10px;
     width: 60%;  
 }
+
+#change-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20%;
+}
+
+#change-page_buttons {
+    display: flex;
+    align-items: center;
+}
+
+#change-page_title {
+    margin: 0;
+}
+
+#change-page_page-number {
+    padding: 5px;
+}
+
+#prev-page-button {
+    background-color: transparent;
+    border: none;
+}
+
+#prev-page-button:hover {
+    cursor: pointer;
+}
+
+#next-page-button {
+    background-color: transparent;
+    border: none;
+}
+
+#next-page-button:hover {
+    cursor: pointer;
+}
+
