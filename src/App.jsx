@@ -4,6 +4,7 @@ import Nav from './components/Nav'
 import Home from './pages/Home';
 import Workspaces from './pages/Workspaces';
 import WorkspacePage from './pages/WorkspacePage';
+import ProjectPage from './pages/ProjectPage';
 import * as zeplinApi from './api/zeplin.service';
 import _ from 'lodash';
 
@@ -64,6 +65,11 @@ function App() {
             <Route
               path='/workspace'
               element={<WorkspacePage />}
+              >
+            </Route>
+            <Route
+              path='/project'
+              element={<ProjectPage />}
               >
             </Route>
           </Routes>
