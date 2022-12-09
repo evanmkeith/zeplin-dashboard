@@ -1,5 +1,6 @@
 import * as zeplinApi from '../../api/zeplin.service';
 import Workspace from '../../components/Workspace';
+import '../../styles/css/workspace.css';
 import Project from '../../components/Project';
 import { useLocation } from 'react-router-dom';
 import {
@@ -11,26 +12,26 @@ import {
 export default function WorkspacePage() {
     const { state: { workspace } = {} } = useLocation();
     const [ screens, setScreens ] = useState([]);
+    const [ showOptions, setShowOptions ] = useState(false);
     const projects = workspace.workspace.allProjects;
-    console.log('workspace: ', workspace);  
-    console.log('Projects', projects);
 
     const getScreens = async() => {
         const projects = workspace.workspace.allProjects;
         const screens = (await Promise.all(projects.map(
             async (project) => zeplinApi.getProjectScreens(project),
           ))).flat();
-        
         setScreens(screens);
     };
-
-    console.log('Screens: ', screens);
 
     const downloadScreenImages = async(e) => {
         e.preventDefault();
         const screenImages = await zeplinApi.downloadAllScreens(screens);
-        console.log(screenImages);
     };
+
+    const showOptionsHandler = (e, action) => {
+        e.preventDefault();
+        setShowOptions(action);
+    }
     
     useEffect(()=>{
         getScreens();
@@ -38,20 +39,28 @@ export default function WorkspacePage() {
 
     return (
         <div> 
-            <div> 
-                <h4>{workspace.workspace.workspaceName == 'Personal Workspace' ? 'Personal' : workspace.workspace.workspaceName} Workspace</h4>
-            </div>
-            <div>
-                <p>Projects</p>
+            <div id='projects-container'>
+                <h3>{workspace.workspace.workspaceName == 'Personal Workspace' ? 'Personal' : workspace.workspace.workspaceName} Workspace</h3>
+                <h4>Projects ({projects.length})</h4>
+                <div id='projects'>
                     {projects.map((p, idx) => {
-                        const projectScreens = screens.filter(s => s['projectName'] == p.name);
-                        console.log(projectScreens);
+                        const projectScreens = screens.filter(screen => screen.projectName == p.name);
                         return (
-                            <Project project={p} idx={idx} screens={projectScreens}/>
+                            <Project project={p} idx={idx} screens={projectScreens} workspace={workspace}/>
                         )
                     })}
+                </div>
             </div>
-            {/* <button onClick={(e) => downloadScreenImages(e)}>Download All Screen Images</button> */}
+            <div id='workspace-options'> 
+                <span  id='workspace-options_more'className="material-symbols-outlined" onMouseOver={(e) => showOptionsHandler(e, true)} onMouseLeave={(e) => showOptionsHandler(e, false)}>
+                    more_horiz
+                </span>
+                { showOptions ? (
+                    <div className='workspace-options_buttons' onMouseOver={(e) => showOptionsHandler(e, true)} onMouseLeave={(e) => showOptionsHandler(e, false)}>
+                        <button onClick={(e) => downloadScreenImages(e)}>Download All Screen Images</button>
+                    </div>
+                ) : (<></>) }
+            </div>
         </div>
     )
 };

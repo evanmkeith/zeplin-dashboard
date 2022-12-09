@@ -1,0 +1,38 @@
+#workspaces {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 5%;
+    width: 100%;
+}
+
+.workspace {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px dashed lightgrey;
+    border-radius: 10px;
+    padding: 2%;
+    width: 15%;
+}
+
+.workspace_button {
+    background-color: #419bf9;
+    border: none; 
+    border-radius: 2px;
+    color: #eae8ea;
+    padding: 6px 15px;
+}
+
+.workspace_button:hover {
+    cursor: pointer;
+    background-color: #448fe1;
+}
+
+#workspaces-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

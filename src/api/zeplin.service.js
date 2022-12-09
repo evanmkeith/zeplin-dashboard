@@ -118,7 +118,7 @@ const downloadAllScreens = async(screens) => {
   // await fs.rm(dir, { recursive: true, force: true });
   // await fs.mkdir(dir);
 
-  const limit = pLimit(20);
+  const limit = pLimit(1);
   const downloadScreens = screens.map((screen) => limit(() => downloadScreen(screen)));
 
   return await Promise.all(downloadScreens);

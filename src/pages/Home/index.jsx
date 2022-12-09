@@ -128,14 +128,11 @@ export default function Home({ projects, user }) {
                         <div id='change-page'>
                             <p id='change-page_title'>Page</p>
                             <div id='change-page_buttons'>
-                            <button id='prev-page-button' onClick={(e) => handleChangeOffset(e, 'prev')}>
-                                <span className="material-symbols-outlined">
-                                    navigate_before
-                                </span>
+                            {}
+                            <button id='prev-page-button' onClick={(e) => handleChangeOffset(e, 'prev')} >
+                                prev
                             </button><p id='change-page_page-number'> {offset == 0 ? 1 : offset/50 + 1} </p><button id='next-page-button' onClick={(e) => handleChangeOffset(e, 'next')}>
-                                <span className="material-symbols-outlined">
-                                    navigate_next
-                                </span>
+                                next
                             </button>
                             </div>
                         </div>

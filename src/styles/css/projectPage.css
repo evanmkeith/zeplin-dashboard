@@ -1,0 +1,51 @@
+#workspace-link {
+    color: #419bf9;
+}
+
+#workspace-link:hover {
+    cursor: pointer;
+}
+
+#workspace-title_workspace {
+    font-weight: 100;
+}
+
+#screens-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#screens {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.screen {
+    border: 1px dashed lightgrey;
+    border-radius: 10px;
+    width: 20%;
+    padding: 5px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    padding: 10px;
+}
+
+.screen-image {
+    width: 100%;
+}
+
+.screen-link {
+    text-align: center;
+    color: #979197;
+    text-decoration: none;
+}
+
+.screen-link:hover {
+    cursor: pointer;
+}
