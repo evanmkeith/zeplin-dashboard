@@ -8,7 +8,7 @@ import {
 
 
 export default function Workspaces({ projects, user }) {
-
+    console.log(projects)
     return (
         <div id='workspaces-container'> 
             <h3>Workspaces</h3>

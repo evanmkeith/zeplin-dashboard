@@ -2,7 +2,7 @@ import * as zeplinApi from '../../api/zeplin.service';
 import Workspace from '../../components/Workspace';
 import '../../styles/css/workspace.css';
 import Project from '../../components/Project';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     useState, 
     useEffect
@@ -10,10 +10,12 @@ import {
 
 
 export default function WorkspacePage() {
+    const navigate = useNavigate();
     const { state: { workspace } = {} } = useLocation();
     const [ screens, setScreens ] = useState([]);
     const [ showOptions, setShowOptions ] = useState(false);
     const projects = workspace.workspace.allProjects;
+    const workspaceUrl = workspace.workspace.workspaceName == 'Personal Workspace' ? 'https://app.zeplin.io/projects' : `https://app.zeplin.io/workspace/${workspace.workspace.workspaceId}/projects`;
 
     const getScreens = async() => {
         const projects = workspace.workspace.allProjects;
@@ -35,12 +37,13 @@ export default function WorkspacePage() {
     
     useEffect(()=>{
         getScreens();
-    }, [])
+    }, [projects])
 
     return (
         <div> 
             <div id='projects-container'>
-                <h3>{workspace.workspace.workspaceName == 'Personal Workspace' ? 'Personal' : workspace.workspace.workspaceName} Workspace</h3>
+                <div id='back-button' onClick={() => navigate(-1)}>{'<<'}</div>
+                <a href={workspaceUrl} target='_blank' id='workspace-title'>{workspace.workspace.workspaceName == 'Personal Workspace' ? 'Personal' : workspace.workspace.workspaceName} Workspace</a>
                 <h4>Projects ({projects.length})</h4>
                 <div id='projects'>
                     {projects.map((p, idx) => {
@@ -57,7 +60,7 @@ export default function WorkspacePage() {
                 </span>
                 { showOptions ? (
                     <div className='workspace-options_buttons' onMouseOver={(e) => showOptionsHandler(e, true)} onMouseLeave={(e) => showOptionsHandler(e, false)}>
-                        <button onClick={(e) => downloadScreenImages(e)}>Download All Screen Images</button>
+                        <button onClick={(e) => downloadScreenImages(e)}>Download All Screen Images ({screens.length})</button>
                     </div>
                 ) : (<></>) }
             </div>

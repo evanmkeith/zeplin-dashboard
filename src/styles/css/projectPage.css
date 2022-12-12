@@ -44,8 +44,36 @@
     text-align: center;
     color: #979197;
     text-decoration: none;
+    word-wrap:break-word;
+    width: 90%;
 }
 
 .screen-link:hover {
     cursor: pointer;
+}
+
+.download-button{
+    margin: 5px;
+}
+
+.project-options_buttons {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    border-radius: 5px;
+    align-items: center;
+}
+
+#download-assets-container {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#download-assets-container form label{
+    padding-left: 8px;
+    
 }

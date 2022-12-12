@@ -45,6 +45,7 @@ button:hover {
     align-items: center;
     padding-left: 10%;
     padding-right: 10%;
+    margin-bottom: 10%;
 }
 
 .workspace-options_buttons {
@@ -56,7 +57,6 @@ button:hover {
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-    margin-bottom: 10%;
 }
 
 #workspace-options_more {
@@ -64,5 +64,39 @@ button:hover {
 }
 
 #workspace-options_more:hover {
+    cursor: pointer;
+}
+
+#back-button {
+    align-self: flex-start;
+    position: relative;
+    top: 1.5vh;
+    left: 2vw;
+}
+
+#back-button:hover {
+    cursor: pointer;
+    color: grey;
+}
+
+.project-title_link {
+    text-decoration: none;
+    color: black;
+}
+
+.project-title_link:hover {
+    text-decoration: none;
+    color: #419bf9;
+}
+
+#workspace-title {
+    text-decoration: none;
+    color: black;
+    font-size:larger;
+    font-weight: 600;
+}
+
+#workspace-title:hover {
+    color: #419bf9;
     cursor: pointer;
 }

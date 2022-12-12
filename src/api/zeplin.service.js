@@ -33,6 +33,7 @@ const getAllProjects = async() => {
         ({ data } = await zeplin.projects.getProjects({
           offset: i * 100,
           limit: 100,
+          status: 'active'
         }));
         projects.push(...data);
         i += 1;
@@ -102,28 +103,58 @@ const downloadScreen = async (screen) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `${dir}/${projectName}/${name}.png`); //or any other extension
+      link.setAttribute('download', `${dir}/${projectName}/${name}.png`); 
       document.body.appendChild(link);
       link.click();
     }).catch((error) => console.log(error));
-
-  //, { responseType: 'stream' }
-
-  // await fs.mkdir(`${dir}/${projectName}`, { recursive: true });
-  // await fs.writeFile(`${dir}/${projectName}/${name}.png`, data);
-  //return (`${dir}/${projectName}/${name}.png`, data)
 };
 
 const downloadAllScreens = async(screens) => {
-  // await fs.rm(dir, { recursive: true, force: true });
-  // await fs.mkdir(dir);
-
   const limit = pLimit(1);
   const downloadScreens = screens.map((screen) => limit(() => downloadScreen(screen)));
 
   return await Promise.all(downloadScreens);
-}
- 
+};
+
+const downloadAsset = async({ name, url, filename }) => {
+  return await axios.get(url, { 
+    responseType: 'arraybuffer',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/png'
+    }
+  }).then((response) => {
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `/${name}/${filename}`); 
+    document.body.appendChild(link);
+    link.click();
+  }).catch((error) => console.log(error));
+};
+
+const downloadProjectAssets = async(assets) => {
+  const limit = pLimit(1);
+  await assets.map((asset) => (limit(() => downloadAsset(asset))));
+};
+
+const getProjectAssetData = async (screen, projectId, formats) => {
+  const { id, name } = screen;
+  const { data } = await zeplin.screens
+    .getLatestScreenVersion(projectId, id);
+  return data.assets.flatMap(({ displayName, contents }) => {
+    // remove any asset that are not in the formats defined in PROJECT_OPTIONS.formats
+    const filteredContents = contents.filter((content) => (
+      formats.includes(content.format)
+    ));
+    return filteredContents.map(({ url, format, density }) => ({
+      name,
+      url,
+      filename: `${displayName.replaceAll('/', '-')}-${density}x.${format}`,
+    }));
+  });
+};
+
 export {
     getAllProjects,
     getAllNotifications, 
@@ -131,5 +162,7 @@ export {
     getUser,
     getProjectScreens,
     getLatestScreenVersion,
-    downloadAllScreens
+    downloadAllScreens, 
+    getProjectAssetData, 
+    downloadProjectAssets
 }
