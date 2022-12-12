@@ -30,10 +30,17 @@ export default function ProjectPage() {
 
     const downloadProjectAssets = async(e) => {
         e.preventDefault();
+        if(formats.length < 1){
+            return alert('Please select a format or formats prior to downloading assets.')
+        }
         const projectAssets = await Promise.all(screens.screens.map(
             (screen) => zeplinApi.getProjectAssetData(screen, projectId, formats),
           ));
-        
+
+        if(projectAssets.flat().length < 1) {
+            return alert('There are no assets in that format, please select another and try again.')
+        };
+
         return zeplinApi.downloadProjectAssets(projectAssets.flat());
     };
 
@@ -64,8 +71,8 @@ export default function ProjectPage() {
                     })}
                 </div>
             </div>
-            <div id='workspace-options'> 
-                <span  id='workspace-options_more'className="material-symbols-outlined" onMouseOver={(e) => showOptionsHandler(e, true)} onMouseLeave={(e) => showOptionsHandler(e, false)}>
+            <div id='project-options'> 
+                <span  id='project-options_more'className="material-symbols-outlined" onMouseOver={(e) => showOptionsHandler(e, true)} onMouseLeave={(e) => showOptionsHandler(e, false)}>
                     more_horiz
                 </span>
                 { showOptions ? (

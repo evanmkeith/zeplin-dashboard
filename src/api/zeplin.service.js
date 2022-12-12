@@ -147,6 +147,7 @@ const getProjectAssetData = async (screen, projectId, formats) => {
     const filteredContents = contents.filter((content) => (
       formats.includes(content.format)
     ));
+
     return filteredContents.map(({ url, format, density }) => ({
       name,
       url,

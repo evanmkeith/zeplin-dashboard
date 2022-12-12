@@ -77,3 +77,16 @@
     padding-left: 8px;
     
 }
+
+#project-options_more {
+    margin-top: 1%;
+    align-self: center;
+}
+
+#project-options {
+    margin-bottom: 8%;
+    width: 100%;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
