@@ -105,6 +105,7 @@ export default function Home({ projects, user }) {
             <div id='main-home'>
                 <div id='notification-filters'>
                     <div id='notification-filters_forms'>
+                        <h3>Notifications</h3>
                         <form id='type-form' onChange={(e) => handleChangeType(e)}>
                             <span className="filter-title">Filter by type</span>
                             <select name="types" id="types" multiple size='13'>

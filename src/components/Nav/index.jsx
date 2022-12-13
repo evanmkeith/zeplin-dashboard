@@ -17,7 +17,7 @@ export default function Nav({ user }) {
                         style={{ textDecoration: 'none', color: 'black' }}
                         to='/'
                         >
-                    Home
+                    Notifications
                     </NavLink>
                     <NavLink 
                         style={{ textDecoration: 'none', color: 'black' }}
